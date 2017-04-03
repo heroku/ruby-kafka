@@ -20,6 +20,13 @@ module Kafka
       @connection.close
     end
 
+    # Fetches api versions
+    def fetch_api_versions
+      request = Protocol::ApiVersionsRequest.new
+
+      @connection.send_request(request)
+    end
+
     # Fetches cluster metadata from the broker.
     #
     # @param (see Kafka::Protocol::TopicMetadataRequest#initialize)

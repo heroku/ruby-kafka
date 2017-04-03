@@ -163,6 +163,27 @@ module Kafka
       resolve_offsets(topic, [partition], offset).fetch(partition)
     end
 
+    def api_versions
+      @seed_brokers.each do |node|
+        @logger.info "Fetching api versions from #{node}"
+
+        begin
+          broker = @broker_pool.connect(node.hostname, node.port)
+          response = broker.fetch_api_versions
+
+          Protocol.handle_error(response.error_code)
+
+          return response.versions
+        rescue Error => e
+          @logger.error "Failed to fetch metadata from #{node}: #{e}"
+        ensure
+          broker.disconnect unless broker.nil?
+        end
+      end
+
+      raise ConnectionError, "Could not connect to any of the seed brokers: #{@seed_brokers.join(', ')}"
+    end
+
     def topics
       cluster_info.topics.map(&:topic_name)
     end

@@ -385,6 +385,11 @@ module Kafka
       end
     end
 
+    # Lists all the available API versions
+    def api_versions
+      @cluster.api_versions
+    end
+
     # Lists all topics in the cluster.
     #
     # @return [Array<String>] the list of topic names.

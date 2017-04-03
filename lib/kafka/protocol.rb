@@ -15,6 +15,7 @@ module Kafka
       12 => :heartbeat,
       13 => :leave_group,
       14 => :sync_group,
+      18 => :api_versions,
     }
 
     ERRORS = {
@@ -81,3 +82,5 @@ require "kafka/protocol/offset_fetch_request"
 require "kafka/protocol/offset_fetch_response"
 require "kafka/protocol/offset_commit_request"
 require "kafka/protocol/offset_commit_response"
+require "kafka/protocol/api_versions_request"
+require "kafka/protocol/api_versions_response"
